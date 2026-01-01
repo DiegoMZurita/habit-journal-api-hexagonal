@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HabitJpaAdapter implements HabitRepositoryPort {
     private final HabitJpaRepository jpaRepository;
-    private final HabitMapper mapper;
+    private final HabitJpaMapper mapper;
 
     @Override
     public Habit save(Habit habit) {
