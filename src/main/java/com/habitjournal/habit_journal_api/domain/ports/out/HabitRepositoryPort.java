@@ -9,4 +9,5 @@ public interface HabitRepositoryPort {
     Habit save(Habit habit);
     Optional<Habit> findByName(String name);
     List<Habit> findAll();
+    Optional<Habit> findById(Long id);
 }

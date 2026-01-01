@@ -1,6 +1,7 @@
 package com.habitjournal.habit_journal_api.application;
 
 import com.habitjournal.habit_journal_api.application.exceptions.DuplicateHabitException;
+import com.habitjournal.habit_journal_api.application.exceptions.HabitNotFoundException;
 import com.habitjournal.habit_journal_api.domain.Habit;
 import com.habitjournal.habit_journal_api.domain.ports.in.CreateHabitUseCase;
 import com.habitjournal.habit_journal_api.domain.ports.in.RetrieveHabitsUseCase;
@@ -30,5 +31,12 @@ public class HabitService implements CreateHabitUseCase, RetrieveHabitsUseCase {
     @Override
     public List<Habit> getHabits() {
         return habitRepositoryPort.findAll();
+    }
+
+    @Override
+    public Habit getHabit(Long id) {
+        return habitRepositoryPort.findById(id).orElseThrow(
+                () -> new HabitNotFoundException(id)
+        );
     }
 }

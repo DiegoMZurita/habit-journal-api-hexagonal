@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface RetrieveHabitsUseCase {
     List<Habit> getHabits();
+    Habit getHabit(Long id);
 }
