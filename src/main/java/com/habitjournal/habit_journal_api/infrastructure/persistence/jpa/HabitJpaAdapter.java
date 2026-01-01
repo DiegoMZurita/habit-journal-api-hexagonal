@@ -7,6 +7,7 @@ import com.habitjournal.habit_journal_api.infrastructure.persistence.jpa.reposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -27,5 +28,10 @@ public class HabitJpaAdapter implements HabitRepositoryPort {
     @Override
     public Optional<Habit> findByName(String name) {
         return jpaRepository.findByName(name).map(mapper::toDomain);
+    }
+
+    @Override
+    public List<Habit> findAll() {
+        return jpaRepository.findAll().stream().map(mapper::toDomain).toList();
     }
 }

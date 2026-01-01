@@ -3,11 +3,14 @@ package com.habitjournal.habit_journal_api.application;
 import com.habitjournal.habit_journal_api.application.exceptions.DuplicateHabitException;
 import com.habitjournal.habit_journal_api.domain.Habit;
 import com.habitjournal.habit_journal_api.domain.ports.in.CreateHabitUseCase;
+import com.habitjournal.habit_journal_api.domain.ports.in.RetrieveHabitsUseCase;
 import com.habitjournal.habit_journal_api.domain.ports.out.HabitRepositoryPort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
-public class HabitService implements CreateHabitUseCase {
+public class HabitService implements CreateHabitUseCase, RetrieveHabitsUseCase {
     private final HabitRepositoryPort habitRepositoryPort;
 
     @Override
@@ -22,5 +25,10 @@ public class HabitService implements CreateHabitUseCase {
             throw new IllegalArgumentException("El nombre del hábito no cumple con las reglas de negocio.");
         }
         return habitRepositoryPort.save(habit);
+    }
+
+    @Override
+    public List<Habit> getHabits() {
+        return habitRepositoryPort.findAll();
     }
 }
