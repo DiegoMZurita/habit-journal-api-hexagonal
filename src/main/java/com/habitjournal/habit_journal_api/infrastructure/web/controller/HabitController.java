@@ -39,7 +39,7 @@ public class HabitController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HabitResponseDTO> getHabitById(@PathVariable Long id) {
+    public ResponseEntity<HabitResponseDTO> getHabitById(@PathVariable String id) {
         Habit habit = retrieveHabitsUseCase.getHabit(id);
         return ResponseEntity.ok(habitDtoMapper.toResponse(habit));
     }

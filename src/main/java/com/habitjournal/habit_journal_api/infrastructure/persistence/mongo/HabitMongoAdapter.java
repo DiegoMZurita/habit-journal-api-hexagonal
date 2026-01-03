@@ -1,5 +1,6 @@
 package com.habitjournal.habit_journal_api.infrastructure.persistence.mongo;
 
+import com.habitjournal.habit_journal_api.common.IdGenerator;
 import com.habitjournal.habit_journal_api.domain.Habit;
 import com.habitjournal.habit_journal_api.domain.ports.out.HabitRepositoryPort;
 import com.habitjournal.habit_journal_api.infrastructure.persistence.mongo.document.HabitDocument;
@@ -22,7 +23,7 @@ public class HabitMongoAdapter implements HabitRepositoryPort {
         HabitDocument document = mapper.toDocument(habit);
 
         if(document.getId()==null){
-            document.setId(Math.abs(ThreadLocalRandom.current().nextLong()));
+            document.setId(IdGenerator.nextId());
         }
 
         HabitDocument savedDoc = mongoRepository.save(document);
@@ -40,7 +41,7 @@ public class HabitMongoAdapter implements HabitRepositoryPort {
     }
 
     @Override
-    public Optional<Habit> findById(Long id) {
+    public Optional<Habit> findById(String id) {
         return mongoRepository.findById(id).map(mapper::toDomain);
     }
 }

@@ -36,7 +36,7 @@ public class HabitJpaAdapter implements HabitRepositoryPort {
     }
 
     @Override
-    public Optional<Habit> findById(Long id) {
+    public Optional<Habit> findById(String id) {
         return jpaRepository.findById(id).map(mapper::toDomain);
     }
 }

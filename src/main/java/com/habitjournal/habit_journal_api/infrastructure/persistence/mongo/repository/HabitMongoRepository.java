@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface HabitMongoRepository extends MongoRepository<HabitDocument, Long> {
+public interface HabitMongoRepository extends MongoRepository<HabitDocument, String> {
     Optional<HabitDocument> findByName(String name);
 }
