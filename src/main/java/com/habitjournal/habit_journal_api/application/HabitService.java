@@ -5,6 +5,7 @@ import com.habitjournal.habit_journal_api.application.exceptions.HabitNotFoundEx
 import com.habitjournal.habit_journal_api.domain.Habit;
 import com.habitjournal.habit_journal_api.domain.ports.in.CreateHabitUseCase;
 import com.habitjournal.habit_journal_api.domain.ports.in.RetrieveHabitsUseCase;
+import com.habitjournal.habit_journal_api.domain.ports.out.GamificationPort;
 import com.habitjournal.habit_journal_api.domain.ports.out.HabitRepositoryPort;
 import lombok.RequiredArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HabitService implements CreateHabitUseCase, RetrieveHabitsUseCase {
     private final HabitRepositoryPort habitRepositoryPort;
+    private final GamificationPort gamificationPort;
 
     @Override
     public Habit createHabit(Habit habit) {
@@ -25,7 +27,9 @@ public class HabitService implements CreateHabitUseCase, RetrieveHabitsUseCase {
         if(!habit.hasValidName()){
             throw new IllegalArgumentException("El nombre del hábito no cumple con las reglas de negocio.");
         }
-        return habitRepositoryPort.save(habit);
+        Habit savedHabit = habitRepositoryPort.save(habit);
+        gamificationPort.notifyHabitCreation(1L, savedHabit.getId());
+        return savedHabit;
     }
 
     @Override

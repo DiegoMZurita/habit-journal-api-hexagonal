@@ -3,6 +3,7 @@ package com.habitjournal.habit_journal_api.application;
 import com.habitjournal.habit_journal_api.application.exceptions.DuplicateHabitException;
 import com.habitjournal.habit_journal_api.domain.Habit;
 import com.habitjournal.habit_journal_api.domain.LogEntry;
+import com.habitjournal.habit_journal_api.domain.ports.out.GamificationPort;
 import com.habitjournal.habit_journal_api.domain.ports.out.HabitRepositoryPort;
 import com.habitjournal.habit_journal_api.infrastructure.persistence.memory.FakeHabitRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +20,13 @@ class HabitServiceTest {
 
     private HabitService habitService;
     private HabitRepositoryPort habitRepository;
+    private GamificationPort port;
 
     @BeforeEach
     void setUp() {
         // 1. Inyectamos manualmente el FakeRepository (versión String/UUID)
         habitRepository = new FakeHabitRepository();
-        habitService = new HabitService(habitRepository);
+        habitService = new HabitService(habitRepository, port);
     }
 
     @Test
